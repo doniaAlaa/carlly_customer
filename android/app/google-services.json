@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "336138983965",
+    "project_id": "carlly-de5a1",
+    "storage_bucket": "carlly-de5a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336138983965:android:e897b9c2737dc4d15a44f4",
+        "android_client_info": {
+          "package_name": "com.carllymotors.carllyuser"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvKv1RcUQW7vrZpVkvMqizmv8cPXHM3qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336138983965:android:458aa8afaa9826285a44f4",
+        "android_client_info": {
+          "package_name": "com.fastjobs.service.provider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvKv1RcUQW7vrZpVkvMqizmv8cPXHM3qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
