@@ -73,11 +73,11 @@ class ImageAssets {
   static const String homeassistance2 = 'assets/images/homeassistance2.png';
   static const String steper1 = 'assets/images/steper1.png';
   static const String map = 'assets/images/map.png';
-  static const String map2 = 'assets/images/map2.png';
-  static const String map3 = 'assets/images/map3.png';
+  // static const String map2 = 'assets/images/map2.png';
+  // static const String map3 = 'assets/images/map3.png';
   static const String map3_1 = 'assets/images/map3_1.png';
   static const String map4 = 'assets/images/map4.png';
-  static const String map5 = 'assets/images/map5.png';
+  // static const String map5 = 'assets/images/map5.png';
   static const String roadassistance = 'assets/images/roadassistance.png';
   static const String roadassistance1 = 'assets/images/roadassistance1.png';
   static const String pickupcars = 'assets/images/pickupcars.png';
