@@ -50,7 +50,6 @@ dependencies:
   geocoding:
   permission_handler:
   geolocator:
-
   ##flutter_share_plus: ^0.0.7
   faabul_color_picker: ^1.1.0
   url_launcher: ^6.2.2
