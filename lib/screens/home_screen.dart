@@ -426,10 +426,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                child: Image.network(
-                                                    Endpoints.imageUrl +
-                                                        (data['listing_img1'] ??
-                                                            ''),
+                                                child:
+                                                data['images'].isNotEmpty?
+                                                Image.network(
+                                                    // Endpoints.imageUrl +
+                                                    //     (data['listing_img1'] ??
+                                                    //         ''),
+                                                  data['images'][0]['image'].toString(),
                                                     width:
                                                         MediaQuery.of(context)
                                                                 .size
@@ -442,7 +445,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 .height *
                                                             0.1 /
                                                             1,
-                                                    fit: BoxFit.fitWidth)),
+                                                    fit: BoxFit.fitWidth):Image.asset('assets/images/no_image.png',
+                                                    width:
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                        0.4 /
+                                                        1,
+                                                    height:
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                        0.1 /
+                                                        1,
+                                                    fit: BoxFit.contain
+                                                )),
                                             Text(
                                               data['listing_title'],
                                               style: Theme.of(context)
@@ -757,6 +774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisCount: 2),
                             itemBuilder: (BuildContext context, int index) {
                               final e = displayedCars[index];
+                              // print('888888888888888888888${e['images'][0]['image'].toString()}');
                               double price =
                                   double.parse(e['listing_price'].toString());
                               MoneyFormatter fmf =
@@ -791,9 +809,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            child: Image.network(
-                                                Endpoints.imageUrl +
-                                                    (e['listing_img1'] ?? ''),
+                                            child:
+                                            e['images'].isNotEmpty?
+                                            Image.network(
+                                                // Endpoints.imageUrl +
+                                                //     (e['listing_img1'] ?? ''),
+                                                e['images'][0]['image'],
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -804,9 +825,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .height *
                                                     0.1 /
                                                     1,
-                                                fit: BoxFit.fitWidth)),
+                                                fit: BoxFit.fitWidth):Image.asset('assets/images/no_image.png')),
                                         Text(
-                                          e['listing_title'],
+                                           e['listing_title'],
+
+
+
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall!

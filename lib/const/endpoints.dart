@@ -2,10 +2,9 @@ class Endpoints {
 
   // static const String baseUrl = "https://backend.carllymotors.com/api/";
   static const String baseUrl = "https://livebackend.carllymotors.com/public/api/";
-  static const String imageUrl = "https://backend.carllymotors.com/";
+  // static const String baseUrl = "https://livebackend.carllymotors.com/api";
 
-  // static const String baseUrl = "https://carsilla.wevisionaries.com/api/";
-  // static const String imageUrl = "https://carsilla.wevisionaries.com/";
+  static const String imageUrl = "https://backend.carllymotors.com/";
   static const String adduser = "adduser"; // post
   static const String getprofile = "getusers"; // get
   static const String updateprofile = "updateprofile"; // post
