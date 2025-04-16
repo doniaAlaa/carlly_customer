@@ -33,40 +33,33 @@ class ImagesGallery{
                       child:Stack(
                         alignment: Alignment.center,
                         children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) =>  VericalGalleryImages(img: img,)),
-                              );
-                            },
-                            child: Container(
-                              // height: MediaQuery.of(context).size.height*0.5,
-                              //
-                              // width: MediaQuery.of(context).size.width*0.5,
-                                child:img.isNotEmpty? Image.network(img[index],fit: BoxFit.contain,
-                                  errorBuilder: ( context,  exception,  stackTrace) {
-                                    return Container(
-                                        height: 80,
-                                        width: MediaQuery.of(context).size.width,
-                                        color: MainTheme.primaryColor.withOpacity(0.1),
-                                        child: Icon(Icons.warning_rounded,size: 50,));
-                                  },
-                                  loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress == null) return child; // Image is fully loaded
+                          Container(
+                            // height: MediaQuery.of(context).size.height*0.5,
+                            //
+                            // width: MediaQuery.of(context).size.width*0.5,
+                              child:img.isNotEmpty? Image.network(img[index],fit: BoxFit.contain,
+                                errorBuilder: ( context,  exception,  stackTrace) {
+                                  return Container(
+                                      height: 80,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: MainTheme.primaryColor.withOpacity(0.1),
+                                      child: Icon(Icons.warning_rounded,size: 50,));
+                                },
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child; // Image is fully loaded
 
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress.expectedTotalBytes != null
-                                            ? loadingProgress.cumulativeBytesLoaded /
-                                            (loadingProgress.expectedTotalBytes ?? 1)
-                                            : null, // Show indeterminate if totalBytes unknown
-                                      ),
-                                    );
-                                  },
-                                ):Container(
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: loadingProgress.expectedTotalBytes != null
+                                          ? loadingProgress.cumulativeBytesLoaded /
+                                          (loadingProgress.expectedTotalBytes ?? 1)
+                                          : null, // Show indeterminate if totalBytes unknown
+                                    ),
+                                  );
+                                },
+                              ):Container(
 
-                                )),
-                          ),
+                              )),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

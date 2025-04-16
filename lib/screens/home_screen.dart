@@ -1,4 +1,5 @@
 import 'package:carsilla/const/assets.dart';
+import 'package:carsilla/core/reusable_widgets/images_gallary.dart';
 import 'package:carsilla/screens/repair_workshop/repair_workshop_screen.dart';
 import 'package:carsilla/screens/spareparts/search_spare_part_screen.dart';
 import 'package:flutter/material.dart';
@@ -428,24 +429,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     BorderRadius.circular(10),
                                                 child:
                                                 data['images'].isNotEmpty?
-                                                Image.network(
-                                                    // Endpoints.imageUrl +
-                                                    //     (data['listing_img1'] ??
-                                                    //         ''),
-                                                  data['images'][0]['image'].toString(),
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4 /
-                                                            1,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.1 /
-                                                            1,
-                                                    fit: BoxFit.fitWidth):Image.asset('assets/images/no_image.png',
+                                                Stack(
+                                                  children: [
+                                                    Image.network(
+                                                        // Endpoints.imageUrl +
+                                                        //     (data['listing_img1'] ??
+                                                        //         ''),
+                                                      data['images'][0]['image'].toString(),
+                                                        width:
+                                                            MediaQuery.of(context)
+                                                                    .size
+                                                                    .width *
+                                                                0.4 /
+                                                                1,
+                                                        height:
+                                                            MediaQuery.of(context)
+                                                                    .size
+                                                                    .height *
+                                                                0.1 /
+                                                                1,
+                                                        fit: BoxFit.fitWidth),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Container(
+                                                        height: 40,width: 40,
+                                                        decoration: BoxDecoration(
+                                                            color: MainTheme.primaryColor,
+                                                            borderRadius: BorderRadius.circular(12)
+
+                                                        ),
+                                                        child: InkWell(
+                                                            onTap: (){
+                                                              ImagesGallery().zoomIn(context,data['images']);
+                                                            },
+                                                            child: Icon(Icons.zoom_in,color: Colors.white,)),
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+
+                                                    :Image.asset('assets/images/no_image.png',
                                                     width:
                                                     MediaQuery.of(context)
                                                         .size
@@ -811,21 +834,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BorderRadius.circular(10),
                                             child:
                                             e['images'].isNotEmpty?
-                                            Image.network(
-                                                // Endpoints.imageUrl +
-                                                //     (e['listing_img1'] ?? ''),
-                                                e['images'][0]['image'],
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4 /
-                                                    1,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.1 /
-                                                    1,
-                                                fit: BoxFit.fitWidth):Image.asset('assets/images/no_image.png')),
+                                            Stack(
+                                              children: [
+                                                Image.network(
+                                                    // Endpoints.imageUrl +
+                                                    //     (e['listing_img1'] ?? ''),
+                                                    e['images'][0]['image'],
+                                                    width: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.4 /
+                                                        1,
+                                                    height: MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.1 /
+                                                        1,
+                                                    fit: BoxFit.fitWidth),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    height: 40,width: 40,
+                                                    decoration: BoxDecoration(
+                                                        color: MainTheme.primaryColor,
+                                                        borderRadius: BorderRadius.circular(12)
+
+                                                    ),
+                                                    child: InkWell(
+                                                        onTap: (){
+                                                          ImagesGallery().zoomIn(context,e['images']);
+                                                        },
+                                                        child: Icon(Icons.zoom_in,color: Colors.white,)),
+                                                  ),
+                                                )
+                                              ],
+                                            ):Center(child: Image.asset('assets/images/no_image.png'))),
                                         Text(
                                            e['listing_title'],
 
