@@ -1155,15 +1155,21 @@ class _SearchCarScreenState extends State<SearchCarScreen> {
                                         const SizedBox(height: 4,),
                                         Row(
                                           children: [
-                                            Text(
-                                              e['listing_title'] ?? '',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelMedium!
-                                                  .copyWith(color: Colors.grey.shade900,fontSize: 14),
+                                            Container(
+                                              width:MediaQuery.of(context).size.width*0.8,
+                                              child: Text(
+                                                overflow: TextOverflow.ellipsis,
+                                                // e['listing_title'] ?? '',
+                                                '${e['id'].toString()}${e['images'].toString()}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium!
+                                                    .copyWith(color: Colors.grey.shade900,fontSize: 14),
+                                              ),
                                             ),
                                           ],
                                         ),
+                                        SizedBox(height: 10,),
                                         Row(
                                           children: [
                                             Column(

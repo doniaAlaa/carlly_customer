@@ -266,7 +266,7 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print('//////////////////${featuresList[8]['subtitle']}');
+    Size size = getMediaSize(context);
 
     double carPrice =
         double.parse(widget.carListingDetails!['listing_price'].toString());
@@ -308,7 +308,12 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
                                 height: MediaQuery.of(context).size.height *
                                     0.25 /
                                     1,
-                                fit: BoxFit.fitWidth),
+                                fit: BoxFit.fitWidth,
+                      errorBuilder: (context, child, erorr) =>
+                          Image.asset(IconAssets.carvector,fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width ,
+                            height: size.width * 0.43,
+                            )),
                             Positioned.fill(
                                 bottom: 30,
                                 child: Align(

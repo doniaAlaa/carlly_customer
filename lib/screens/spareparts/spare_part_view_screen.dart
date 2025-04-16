@@ -294,7 +294,13 @@ class _SparePartViewScreenState extends State<SparePartViewScreen> {
                                 height: size.width * 0.48,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, child, erorr) =>
-                                    Image.asset(IconAssets.carvector),
+                                    Image.asset(IconAssets.carvector,
+                                      width: MediaQuery.of(context).size.width *
+                                          04 /
+                                          1,
+                                      height: size.width * 0.48,
+                                      fit: BoxFit.cover,
+                                    ),
                               ),
                             ),
                             Padding(
