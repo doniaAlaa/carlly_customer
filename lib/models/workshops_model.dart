@@ -18,12 +18,12 @@ class WorkshopsModel {
   // final List<BrandCategoriesModel>? categories;
   // final List<BrandCategoriesModel>? brands;
 
-  final String? whatsapp;
+  final String? whatsapp_number;
   final String? phone;
   final double? lat;
   final double? lng;
   final List<SelectedDays>? days;
-  // final List<XFile>? images;
+  final List<dynamic>? images;
 
 
   WorkshopsModel({
@@ -41,14 +41,14 @@ class WorkshopsModel {
     this.updated_at,
     // this.usertype,
 
-    this.whatsapp,
+    this.whatsapp_number,
     this.phone,
     this.lat,
     this.lng,
     // this.categories,
     // this.brands,
     this.days,
-    // this.images
+    this.images
 
 
   });
@@ -69,8 +69,11 @@ class WorkshopsModel {
       updated_at: json['updated_at'],
       workshop_name: json['workshop_name'],
       phone: json['phone'],
+      whatsapp_number: json['whatsapp_number'],
       lat: json['lat'],
       lng: json['lng'],
+      images : json['images'] != null ?json['images'].cast<dynamic>():null,
+
       days: List<SelectedDays>.from(
           json['days'].map((x) => SelectedDays.fromJson(x))),
       // categories:
