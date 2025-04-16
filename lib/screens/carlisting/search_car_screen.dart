@@ -1186,7 +1186,7 @@ class _SearchCarScreenState extends State<SearchCarScreen> {
                                               ],
                                             ),
 
-                                            SizedBox(width: size.width * 0.2,),
+                                            SizedBox(width: size.width * 0.1,),
 
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,

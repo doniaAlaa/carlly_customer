@@ -149,8 +149,8 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
 
     featuresList.add({
       'title': 'Car Features',
-      'subtitle':
-          displayCarFeaturesList(widget.carListingDetails!['features_others'])
+      'subtitle':''
+          //displayCarFeaturesList(widget.carListingDetails!['features_others'])
     });
 
     if (widget.carListingDetails!['car_type'] == "Auction") {
@@ -176,6 +176,10 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
   }
 
   String displayCarFeaturesList(dynamic data) {
+    print('ccccccccccccccc');
+    print(data);
+    print('ccccccccccccccc');
+
     String carFeatures = '';
     if (data != null) {
       if (data is String) {

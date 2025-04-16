@@ -11,6 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show rootBundle;
+
 
 class RepairWorkshopViewScreen extends StatefulWidget {
   final String selectedEmirate;
@@ -806,9 +808,10 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                 borderRadius: BorderRadius.circular(12),
                                 child: repairWorkshopViewScreenController.workshopsModel[index].logo != null &&
 
-                                    repairWorkshopViewScreenController.workshopsModel[index].logo!.isNotEmpty?
+                                    repairWorkshopViewScreenController.workshopsModel[index].images!.isNotEmpty?
                                     Image.network(
-                                  repairWorkshopViewScreenController.workshopsModel[index].logo??'',
+                                  // repairWorkshopViewScreenController.workshopsModel[index].logo??'',
+                                  repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image']??'',
                                   // width: MediaQuery.of(context).size.width * 0.9,
                                   width: MediaQuery.of(context).size.width ,
                                   height: size.width * 0.48,
@@ -826,7 +829,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                     height: 140,
                                     decoration: BoxDecoration(
 
-                                        border:Border(bottom: BorderSide(color: Colors.black))
+                                        border:Border(bottom: BorderSide(color: Colors.white,width: 2))
                                     ),
                                     child: Center(child: Image.asset('assets/images/no_image.png'))),
                               ),
@@ -855,6 +858,8 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                           child: SizedBox(
                                             width: 80,
                                             child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 const Icon(
                                                   Icons.location_pin,
@@ -897,6 +902,9 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                     ),
                                     const SizedBox(height: 4),
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         const Icon(
                                           Icons.location_on,
@@ -908,7 +916,6 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                           child: Text(
                                             // workshop['address']!,
                                             repairWorkshopViewScreenController.workshopsModel[index].location??'location',
-                                            // 'llll',
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.black54),
@@ -917,7 +924,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 4),
+                                    // const SizedBox(height: 4),
                                     shopDays != null &&
                                         shopDays!.isNotEmpty?
                                     InkWell(
@@ -987,7 +994,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                             );
                                           }):Container();
                                     }),
-
+                                    SizedBox(height: 8,),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
@@ -998,7 +1005,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                             onTap: () {
                                               // Handle WhatsApp tap
                                               // launchUrlString('${repairWorkshopViewScreenController.workshopsModel[index].phone}');
-                                              launchUrlString('https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp}');
+                                              launchUrlString('https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp_number}');
 
                                             },
                                             child: Container(
@@ -1075,31 +1082,49 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                               // Handle Share tap
                                               // final box = context.findRenderObject() as RenderBox?;
                                               print('uuuuuuuuuuuuuu');
-                                              final uri = Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].logo??'');
+                                              // repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image'];
+//                                               final uri = Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].logo??'');
+//                                               final response = await http.get(uri);
+//                                               final bytes =  response.bodyBytes;
+//                                               final temp =  await getTemporaryDirectory();
+//                                               final file = File('${temp.path}/shared_workshop_image.jpg');
+//
+//                                               await file.writeAsBytes(bytes);
+//                                               print(file.path);
+// \                                              final result = await http.head(Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].logo??''));
+//                                               print(result.statusCode);
+
+                                             if(repairWorkshopViewScreenController.workshopsModel[index].images!.isNotEmpty){
+                                               final uri = Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image']??'');
                                               final response = await http.get(uri);
                                               final bytes =  response.bodyBytes;
                                               final temp =  await getTemporaryDirectory();
-                                              // final path =  '${temp.path}/shared_image.jpg';
                                               final file = File('${temp.path}/shared_workshop_image.jpg');
 
                                               await file.writeAsBytes(bytes);
-                                              print(file.path);
-                                              // print('444444444444${repairWorkshopViewScreenController.workshopsModel[index].logo}');
-                                              final result = await http.head(Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].logo??''));
-                                              print(result.statusCode);
+                                               Share.shareXFiles(
+                                                 [XFile(file.path)],
+                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
 
-                                              Share.shareXFiles(
-                                                [XFile(file.path)],
-                                               text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
+                                               );
 
-                                              );
-                                              // Share.share(
-                                              //    '''
-                                              //    workshop name : ${workshopsModel.workshop_name}
-                                              //    phone : ${workshopsModel.phone}
-                                              //    ''',
-                                              //
-                                              // );
+                                             }else{
+                                               final byteData = await rootBundle.load('assets/images/no_image.png'); // asset path
+
+                                               final tempDir = await getTemporaryDirectory();
+                                               final file = File('${tempDir.path}/no_image.png');
+                                               await file.writeAsBytes(byteData.buffer.asUint8List());
+
+                                               Share.shareXFiles(
+                                                 [XFile(file.path)],
+                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
+
+                                               );
+
+                                             }
+
+
+
                                             },
                                             child: Container(
                                               height: 30,
