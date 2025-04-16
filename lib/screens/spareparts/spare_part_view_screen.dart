@@ -260,6 +260,7 @@ class _SparePartViewScreenState extends State<SparePartViewScreen> {
                   ),
                 ],
               ),
+              SparePartProvider.sparePartsShopsList2.isNotEmpty?
               Wrap(
                 spacing: 8.0,
                 runSpacing: 8.0,
@@ -460,6 +461,9 @@ class _SparePartViewScreenState extends State<SparePartViewScreen> {
                   );}
                 )
                     .toList(),
+              ):Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Text('There Is No Data',style: TextStyle(fontSize: 16),),
               ),
             ],
           ));

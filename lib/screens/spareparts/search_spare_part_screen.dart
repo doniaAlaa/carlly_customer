@@ -603,7 +603,7 @@ class _SearchSparePartScreenState extends State<SearchSparePartScreen> {
                     return GestureDetector(
                       onTap: () async {
                         await SparePartService.getSparePartsSubCategories(context, e['id']).then((value){
-                          print('----map ${value.toString()}');
+                          print('----map ${e['image']}');
                                 subcategories = value;
                               });
 

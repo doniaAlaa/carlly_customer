@@ -52,6 +52,7 @@ class SparePartService {
     try {
       final checkrepsonse = await ApiClass()
           .getApiData(Endpoints.baseUrl + Endpoints.getsparepartscategories);
+      print('getSparePartsCategorysepoF${checkrepsonse.toString()}');
       return checkrepsonse;
     } catch (e) {
       debugPrint(
