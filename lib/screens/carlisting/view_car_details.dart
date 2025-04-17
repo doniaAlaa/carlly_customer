@@ -291,15 +291,15 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
                     .copyWith(color: Colors.black),
               ),
             ),
+            carList.isNotEmpty?
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: cs.FlutterCarousel(
                   items: carList.map((e) {
 
-
                     return ClipRRect(
                         borderRadius: BorderRadius.circular(13),
-                        child: Stack(
+                        child:e['image'].isNotEmpty? Stack(
                           children: [
                             Image.network(e['image'].toString(),
                                 width: MediaQuery.of(context).size.width *
@@ -328,6 +328,9 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
                                       )),
                                     )))
                           ],
+                        ):Image.asset(IconAssets.carvector,fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width ,
+                          height: size.width * 0.43,
                         ));
                   }).toList(),
                   options: cs.CarouselOptions(
@@ -360,6 +363,9 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
                             currentIndicatorColor: MainTheme.primaryColor,
                             indicatorBackgroundColor: Colors.grey.shade300)),
                   )),
+            ):Image.asset(IconAssets.carvector,fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width ,
+              height: size.width * 0.43,
             ),
             widget.carListingDetails!['listing_desc'] != null
                 ? Column(
