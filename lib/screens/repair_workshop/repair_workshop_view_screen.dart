@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:carsilla/controllers/repair_workshop_view_screen_controller.dart';
+import 'package:carsilla/core/reusable_widgets/images_gallary.dart';
 import 'package:carsilla/models/workshops_model.dart';
 import 'package:flutter/material.dart';
 import 'package:carsilla/utils/theme.dart';
@@ -806,24 +807,46 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
-                                child: repairWorkshopViewScreenController.workshopsModel[index].logo != null &&
+                                child:
+                                // repairWorkshopViewScreenController.workshopsModel[index].logo != null &&
 
                                     repairWorkshopViewScreenController.workshopsModel[index].images!.isNotEmpty?
-                                    Image.network(
-                                  // repairWorkshopViewScreenController.workshopsModel[index].logo??'',
-                                  repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image']??'',
-                                  // width: MediaQuery.of(context).size.width * 0.9,
-                                  width: MediaQuery.of(context).size.width ,
-                                  height: size.width * 0.48,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                        height: 140,
-                                        decoration: BoxDecoration(
-                                            border:Border(bottom: BorderSide(color: Colors.black))
-                                        ),
-                                        child: Center(child: Icon(Icons.warning_rounded,size: 90,)),)
-                                )
+                                    Stack(
+                                      children: [
+                                        Image.network(
+                                            // repairWorkshopViewScreenController.workshopsModel[index].logo??'',
+                                            repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image']??'',
+                                            // width: MediaQuery.of(context).size.width * 0.9,
+                                            width: MediaQuery.of(context).size.width ,
+                                            height: size.width * 0.48,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) =>
+                                          Container(
+                                            height: 140,
+                                            decoration: BoxDecoration(
+                                                border:Border(bottom: BorderSide(color: Colors.black))
+                                            ),
+                                            child: Center(child: Icon(Icons.warning_rounded,size: 90,)),)
+                                                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            height: 40,width: 40,
+                                            decoration: BoxDecoration(
+                                                color: MainTheme.primaryColor,
+                                                borderRadius: BorderRadius.circular(12)
+
+                                            ),
+                                            child: InkWell(
+                                                onTap: (){
+                                                  ImagesGallery().zoomIn(context,repairWorkshopViewScreenController.workshopsModel[index].images!);
+                                                },
+                                                child: Icon(Icons.zoom_in,color: Colors.white,)),
+                                          ),
+                                        )
+
+                                      ],
+                                    )
 
                                     : Container(
                                     height: 140,
