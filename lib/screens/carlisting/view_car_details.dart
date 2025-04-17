@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:carsilla/const/assets.dart';
 import 'package:carsilla/const/common_methods.dart';
+import 'package:carsilla/core/reusable_widgets/toast.dart';
 import 'package:carsilla/providers/user_provider.dart';
 import 'package:carsilla/utils/theme.dart';
 import 'package:carsilla/screens/GoogleMap/view_location_on_map.dart';
@@ -80,6 +81,7 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
     //     widget.carListingDetails!['listing_img5'] != "")
     //   carList
     //       .add(Endpoints.imageUrl + widget.carListingDetails!['listing_img5']);
+
     carList.clear();
     List<dynamic> images = widget.carListingDetails!['images'];
     images.forEach((e){
@@ -149,8 +151,8 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
 
     featuresList.add({
       'title': 'Car Features',
-      'subtitle':''
-          //displayCarFeaturesList(widget.carListingDetails!['features_others'])
+      // 'subtitle':''
+      'subtitle':displayCarFeaturesList(widget.carListingDetails!['features_others'])
     });
 
     if (widget.carListingDetails!['car_type'] == "Auction") {
@@ -177,18 +179,20 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
 
   String displayCarFeaturesList(dynamic data) {
     print('ccccccccccccccc');
-    print(data);
-    print('ccccccccccccccc');
-
+    String features = '$data';
     String carFeatures = '';
-    if (data != null) {
-      if (data is String) {
-        List<String> featuresList = List.from(jsonDecode(data));
-        carFeatures = featuresList.join(', ');
-      } else {
-        List<String> featureList = List.from(data);
-        carFeatures = featureList.join(', ');
+
+    if(features.contains('[')){
+      if (data != null) {
+        if (data is String) {
+          List<String> featuresList = List.from(jsonDecode(data));
+          carFeatures = featuresList.join(', ');
+        } else {
+          List<String> featureList = List.from(data);
+          carFeatures = featureList.join(', ');
+        }
       }
+
     }
     return carFeatures;
   }
@@ -363,10 +367,22 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
                             currentIndicatorColor: MainTheme.primaryColor,
                             indicatorBackgroundColor: Colors.grey.shade300)),
                   )),
-            ):Image.asset(IconAssets.carvector,fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width ,
-              height: size.width * 0.43,
-            ),
+            ):
+
+            // Image.asset(IconAssets.carvector,fit: BoxFit.cover,
+            //   width: MediaQuery.of(context).size.width ,
+            //   height: size.width * 0.43,
+            // ),
+            Container(
+                decoration: BoxDecoration(
+                  color: MainTheme.primaryColor.withOpacity(0.1),
+
+                  borderRadius:
+                  BorderRadius.circular(10),
+                ),
+                height: 140,
+                width: MediaQuery.of(context).size.width,
+                child: Icon(Icons.warning_rounded,size: 50,)),
             widget.carListingDetails!['listing_desc'] != null
                 ? Column(
                     children: [
@@ -610,4 +626,6 @@ class _ViewCarDetailsState extends State<ViewCarDetails> {
       ),
     );
   }
+
+
 }
