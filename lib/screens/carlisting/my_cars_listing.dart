@@ -1,3 +1,4 @@
+import 'package:carsilla/core/reusable_widgets/images_gallary.dart';
 import 'package:carsilla/models/user_model.dart';
 import 'package:carsilla/providers/user_provider.dart';
 import 'package:carsilla/screens/carlisting/add_car_screen.dart';
@@ -107,7 +108,7 @@ class _MyCarsListingState extends State<MyCarsListing> {
               Consumer<CarListingProvider>(
                 builder: (context, carListingValVm, child) {
                   displayedCars = List.from(carListingValVm.myCarListingDataList);
-                  print('hhhhhhhhhhhhhhhhhhhh${displayedCars[0].toString()}');
+                  // print('hhhhhhhhhhhhhhhhhhhh${displayedCars[0].toString()}');
                   return displayedCars.isNotEmpty
                       ? Align(
                     alignment: Alignment.topLeft,
@@ -147,27 +148,52 @@ class _MyCarsListingState extends State<MyCarsListing> {
                                     CrossAxisAlignment.start,
                                     children: [
                                       e['images'].isNotEmpty?
-                                      ClipRRect(
+                                      Stack(
+                                        children: [
+                                          ClipRRect(
+                                              borderRadius:
+                                              BorderRadius.circular(10),
+                                              child: Image.network(
+                                                  // Endpoints.imageUrl +
+                                                  //     e['listing_img1'],
+                                                   e['images'][0]['image'],
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                      0.4 /
+                                                      1,
+                                                  height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                      0.1 /
+                                                      1,
+                                                  fit: BoxFit.fitWidth)),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              height: 40,width: 40,
+                                              decoration: BoxDecoration(
+                                                  color: MainTheme.primaryColor,
+                                                  borderRadius: BorderRadius.circular(12)
+
+                                              ),
+                                              child: InkWell(
+                                                  onTap: (){
+                                                    ImagesGallery().zoomIn(context,e['images']);
+                                                  },
+                                                  child: Icon(Icons.zoom_in,color: Colors.white,)),
+                                            ),
+                                          )
+                                        ],
+                                      ):Container(
+                                        decoration: BoxDecoration(
+                                          color: MainTheme.primaryColor.withOpacity(0.1),
+
                                           borderRadius:
                                           BorderRadius.circular(10),
-                                          child: Image.network(
-                                              // Endpoints.imageUrl +
-                                              //     e['listing_img1'],
-                                               e['images'][0]['image'],
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                                  0.4 /
-                                                  1,
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                                  0.1 /
-                                                  1,
-                                              fit: BoxFit.fitWidth)):Container(
+                                        ),
                                           height: 80,
                                           width: MediaQuery.of(context).size.width,
-                                          color: MainTheme.primaryColor.withOpacity(0.1),
                                           child: Icon(Icons.warning_rounded,size: 50,)),
                                       Text(
                                         e['listing_title'],
