@@ -17,20 +17,29 @@ class EditCarListController extends GetxController{
     Future.delayed(const Duration(seconds: 1), () {
       loadingImage.value = 0.3;
     });
-    final response = await CarListingService().editCarImages(id,image);
-    print(response['status']);
-    if(response['status'] == true){
-      List imgs = response['data'];
-      imagesList.clear();
-      imagesData.clear();
-      imgs.forEach((e){
-        imagesList.add(e['image']);
-        imagesData.add(e);
-      });
-      uploadedImagesNum.value = imagesData.length;
+    try{
+      final response = await CarListingService().editCarImages(id,image);
+      print(response['status']);
+      if(response['status'] == true){
+        List imgs = response['data'];
+        imagesList.clear();
+        imagesData.clear();
+        imgs.forEach((e){
+          imagesList.add(e['image']);
+          imagesData.add(e);
+        });
+        uploadedImagesNum.value = imagesData.length;
+        loadingImage.value = 0.0;
+        imagesLoading.value = false;
+      }else{
+        loadingImage.value = 0.0;
+        imagesLoading.value = false;
+      }
+    }catch(e){
       loadingImage.value = 0.0;
       imagesLoading.value = false;
     }
+
 
 
   }

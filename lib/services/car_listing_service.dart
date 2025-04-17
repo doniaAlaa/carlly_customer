@@ -72,7 +72,7 @@ class CarListingService {
       print('rrrrrrrrrrr$e');
     }
     final formData = dioPackage.FormData.fromMap({
-      "carId": carId.toString(),
+      "car_id": carId.toString(),
       "images[]":multipartImages
       // الصورة هنا
 
