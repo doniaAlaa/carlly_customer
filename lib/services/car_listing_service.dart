@@ -5,9 +5,11 @@ import 'package:carsilla/globel_by_callofcoding.dart';
 import 'package:carsilla/resources/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import '../const/endpoints.dart';
 import 'NetworkApiService.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dioPackage;
 
 import 'exception.dart';
 
@@ -45,6 +47,117 @@ class CarListingService {
     } catch (e) {
       debugPrint(
           '$e-------- 🎈 try catch when getDealersDataRepF api in repo ------------------------------');
+    }
+  }
+
+
+
+
+  ////////
+
+  Future<dynamic> editCarImages( int carId , imagesList) async {
+    String? token = await getAuthToken();
+    if(token == null){
+      return;
+    }
+    final dioo = dioPackage.Dio();
+
+    List<dioPackage.MultipartFile> multipartImages = [];
+    try{
+      for (XFile image in imagesList) {
+        print(image);
+        multipartImages.add(await dioPackage.MultipartFile.fromFile(image.path, filename: image.name));
+      }
+    }catch(e){
+      print('rrrrrrrrrrr$e');
+    }
+    final formData = dioPackage.FormData.fromMap({
+      "carId": carId.toString(),
+      "images[]":multipartImages
+      // الصورة هنا
+
+      // "workshop_logo":data.image != null? await dioPackage.MultipartFile.fromFile(
+      //   data.image!.path??'',
+      //   filename: data.image?.path.split('/').last,
+      // ):null,
+    });
+
+    try {
+      final response = await dioo.post(
+        "${Endpoints.baseUrl}uploadImgs",
+        data: formData,
+        options: dioPackage.Options(
+          followRedirects: false,
+          // will not throw errors
+          validateStatus: (status) => true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      print('Responseeeeeeeee: ${response.data}');
+      if (response.statusCode == 200 || response.statusCode == 201 ) {
+
+        return response.data;
+
+      } else {
+
+        throw Exception("faild to load ");
+
+      }
+    } catch (e) {
+      print('Errorrrrrrrr: $e');
+    }
+  }
+  Future<dynamic> removeCarImages( int id ,) async {
+    String? token = await getAuthToken();
+    if(token == null){
+      return;
+    }
+    final dioo = dioPackage.Dio();
+
+
+    final formData = dioPackage.FormData.fromMap({
+
+      // الصورة هنا
+
+      // "workshop_logo":data.image != null? await dioPackage.MultipartFile.fromFile(
+      //   data.image!.path??'',
+      //   filename: data.image?.path.split('/').last,
+      // ):null,
+    });
+
+    try {
+      final response = await dioo.delete(
+        "${Endpoints.baseUrl}delImg/$id",
+        // data: formData,
+        options: dioPackage.Options(
+          followRedirects: false,
+          // will not throw errors
+          validateStatus: (status) => true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      print('Responseeeeeeeee: ${response.data}');
+      if (response.statusCode == 200 || response.statusCode == 201 ) {
+
+        return response.data;
+
+      } else {
+
+        throw Exception("faild to load ");
+
+      }
+    } catch (e) {
+      print('Errorrrrrrrr: $e');
     }
   }
 
@@ -88,11 +201,22 @@ class CarListingService {
       request.headers['Content-Type'] = 'application/json';
       request.headers['Authorization'] = token;
 
+      // if (imagesList!.isNotEmpty) {
+      //   for (int i = 0; i < imagesList.length; i++) {
+      //     var image = await http.MultipartFile.fromPath(
+      //       'listing_img${i + 1}', // Using i + 1 to match the keys "listing_img1", "listing_img2", ...
+      //       imagesList[i].path,
+      //     );
+      //     request.files.add(image);
+      //   }
+      // }
+
+      //IMAGES
       if (imagesList!.isNotEmpty) {
         for (int i = 0; i < imagesList.length; i++) {
           var image = await http.MultipartFile.fromPath(
-            'listing_img${i + 1}', // Using i + 1 to match the keys "listing_img1", "listing_img2", ...
-            imagesList[i].path,
+            'images[]', // Using i + 1 to match the keys "listing_img1", "listing_img2", ...
+            imagesList[i],
           );
           request.files.add(image);
         }
@@ -211,6 +335,18 @@ class CarListingService {
          }
          }
       }
+      print(imagesList.toString());
+      // if (imagesList!.isNotEmpty) {
+      //   for (int i = 0; i < imagesList.length; i++) {
+      //     var image = await http.MultipartFile.fromPath(
+      //       // 'listing_img${i + 1}', // Using i + 1 to match the keys "listing_img1", "listing_img2", ...
+      //       'images[]', // Using i + 1 to match the keys "listing_img1", "listing_img2", ...
+      //       imagesList[i],
+      //     );
+      //     request.files.add(image);
+      //   }
+      // }
+
 
       request.fields['carId'] = car_id ?? '';
       request.fields['listing_type'] = listing_car ?? '';
@@ -253,6 +389,7 @@ class CarListingService {
 
       return returnResponse(response);
     } catch (e) {
+      print('ppppppppppppppppppppppppppppppppppppppppp$e');
       debugPrint(
           '$e-------- try catch when editCarDetailsListingDataRepF api in repo ------------------------------');
     }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:carsilla/const/assets.dart';
+import 'package:carsilla/core/reusable_widgets/toast.dart';
 import 'package:carsilla/providers/user_provider.dart';
 import 'package:carsilla/utils/theme.dart';
 import '../../utils/ui_utils.dart';
@@ -52,7 +53,10 @@ class _AddCarScreenState extends State<AddCarScreen> {
   String conNmbrCountryCode = "+971";
 
 
-  List<XFile> imagesList = [];
+  // List<XFile> imagesList = [];
+  List imagesList = [];
+  List<XFile> imagesFiles = [];
+  int selectedImagesNum  = 0;
   List featuresList = [];
   List<String> cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ras Al Khaimah', 'Fujairah', 'Ajman', 'Umm Al Quwain', 'Al Ain'];
   String? selectedCity;
@@ -141,9 +145,9 @@ class _AddCarScreenState extends State<AddCarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    typecontroller.text = 'Car';
-    modelcontroller.text = 'X4';
-    yearcontroller.text = '2016';
+    // typecontroller.text = 'Car';
+    // modelcontroller.text = 'X4';
+    // yearcontroller.text = '2016';
 
     Size size = getMediaSize(context);
 
@@ -169,26 +173,100 @@ class _AddCarScreenState extends State<AddCarScreen> {
                 ),
               ],
             ),
+            // GestureDetector(
+            //   onTap: () async {
+            //     if(imagesList.length < 5){
+            //       await ImagePicker()
+            //            .pickMultiImage(imageQuality: 40).then((image) {
+            //         if (image.isNotEmpty) {
+            //
+            //           int elementsToAdd = image.length >= 5 ? 5 : image.length;
+            //
+            //           for (int i = 0; i < elementsToAdd; i++) {
+            //             imagesList.add(image[i]);
+            //           }
+            //           setState(() {
+            //           });
+            //         }
+            //            },);
+            //     }else{
+            //       UiUtils(context).showSnackBar( "Image limit exceed.");
+            //     }
+            //
+            //   },
+            //   child: Container(
+            //     height: MediaQuery.of(context).size.height * 0.25 / 1,
+            //     decoration: BoxDecoration(
+            //         color: Colors.grey,
+            //         borderRadius: BorderRadius.circular(13),
+            //         image: imagesList.isNotEmpty
+            //             ? DecorationImage(
+            //                 image: FileImage(File(imagesList.last.path)),
+            //                 fit: BoxFit.cover,
+            //                 opacity: 0.3)
+            //             : DecorationImage(
+            //                 image: AssetImage(
+            //                   IconAssets.camera,
+            //                 ),
+            //                 fit: BoxFit.fill,
+            //                 opacity: 0)),
+            //     child: Center(
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: [
+            //           const Text(
+            //             'Add Image',
+            //             style: TextStyle(color: Colors.white),
+            //           ),
+            //           Image.asset(
+            //             IconAssets.camera,
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             GestureDetector(
               onTap: () async {
+
                 if(imagesList.length < 5){
                   await ImagePicker()
-                       .pickMultiImage(imageQuality: 40).then((image) {
+                      .pickMultiImage(imageQuality: 40).then((image) {
                     if (image.isNotEmpty) {
 
                       int elementsToAdd = image.length >= 5 ? 5 : image.length;
 
-                      for (int i = 0; i < elementsToAdd; i++) {
-                        imagesList.add(image[i]);
+
+                      if(image.length + imagesList.length > 5){
+                        int remainingImagesNumber = 5 - (imagesList.length) ;
+                        // List<XFile> reversedImages = image.reversed.toList();
+
+                        // List<XFile> remainingImages = reversedImages.sublist(0, remainingImagesNumber);
+                        List<XFile> remainingImages = image.sublist(0, remainingImagesNumber);
+                        remainingImages.forEach((e){
+                          imagesList.add(e.path);
+                          imagesFiles.add(e);
+                          selectedImagesNum = imagesList.length;
+                        });
+                        showtoastF(context,"You can't have more than 5 images for the car!",duration: 5);
+
+                      }else{
+                        for (int i = 0; i < elementsToAdd; i++) {
+                          imagesList.add(image[i].path);
+                          selectedImagesNum = imagesList.length;
+
+                        }
                       }
                       setState(() {
                       });
                     }
-                       },);
+                  },);
                 }else{
-                  UiUtils(context).showSnackBar( "Image limit exceed.");
+                  showtoastF(context, "Image limit exceed.");
                 }
-                
+
+
               },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.25 / 1,
@@ -197,15 +275,15 @@ class _AddCarScreenState extends State<AddCarScreen> {
                     borderRadius: BorderRadius.circular(13),
                     image: imagesList.isNotEmpty
                         ? DecorationImage(
-                            image: FileImage(File(imagesList.last.path)),
-                            fit: BoxFit.cover,
-                            opacity: 0.3)
+                        image: FileImage(File(imagesList.last)),
+                        fit: BoxFit.cover,
+                        opacity: 0.3)
                         : DecorationImage(
-                            image: AssetImage(
-                              IconAssets.camera,
-                            ),
-                            fit: BoxFit.fill,
-                            opacity: 0)),
+                        image: AssetImage(
+                          IconAssets.camera,
+                        ),
+                        fit: BoxFit.fill,
+                        opacity: 0)),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +294,8 @@ class _AddCarScreenState extends State<AddCarScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       Image.asset(
-                        IconAssets.camera,
+                          IconAssets.camera,
+                          height: size.height * 0.035
                       )
                     ],
                   ),
@@ -224,67 +303,67 @@ class _AddCarScreenState extends State<AddCarScreen> {
               ),
             ),
 
+            // SizedBox(height: 6,),
+            Align(
+                alignment: Alignment.topRight,
+                child: Text('${selectedImagesNum}/5')),
             imagesList.isNotEmpty
-                ? SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1 / 1,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      controller: ScrollController(),
-                      itemCount: imagesList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              imagesList.removeAt(index);
-                              setState(() {});
-                            },
-                            child: Badge(
-                              label: const Icon(
-                                Icons.delete_outlined,
-                                color: Colors.white,
-                                size: 13,
-                              ),
-                              child: Container(
-                                width:
-                                    MediaQuery.of(context).size.width * 0.2 / 1,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.1 / 1,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 0.5,
-                                        color: MainTheme.primaryColor)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Image.file(File(imagesList[index].path),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2 /
-                                          1,
-                                      height: MediaQuery.of(context).size.height *
-                                          0.1 /
-                                          1,
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
+                ? Padding(
+              padding: const EdgeInsets.only(top:10.0),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1 / 1,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  controller: ScrollController(),
+                  itemCount: imagesList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        imagesList.removeAt(index);
+                        selectedImagesNum = imagesList.length;
+
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Badge(
+                          label: const Icon(
+                            Icons.delete_outlined,
+                            color: Colors.white,
+                            size: 13,
+                          ),
+                          child: Container(
+                            width:
+                            MediaQuery.of(context).size.width * 0.2 / 1,
+                            height:
+                            MediaQuery.of(context).size.height * 0.1 / 1,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width:index == 0? 4: 0.5,
+                                    color:index == 0? Colors.red :MainTheme.primaryColor)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Image.file(File(imagesList[index]),
+                                  width: MediaQuery.of(context).size.width *
+                                      0.2 /
+                                      1,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.1 /
+                                      1,
+                                  fit: BoxFit.cover),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  )
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            )
                 : const SizedBox(height: 0),
 
-            // SizedBox(height: MediaQuery.of(context).size.height * 0.02 / 1),
-            // Row(
-            //   children: [
-            //     Text('Choose Your Vehicle',
-            //         style: textTheme.titleSmall!.copyWith(
-            //             fontSize: 13,
-            //             fontWeight: FontWeight.w500,
-            //             color: MainTheme.primaryColor)),
-            //   ],
-            // ),
+
             SizedBox(height: MediaQuery.of(context).size.height * 0.01 / 1),
             SizedBox(height: MediaQuery.of(context).size.height * 0.01 / 1),
             //Type
@@ -377,7 +456,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
                       //               ]))),
                       // )
                     ])),
-            //SizedBox(height: MediaQuery.of(context).size.height * 0.01 / 1),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01 / 1),
             SizedBox(
               //height: MediaQuery.of(context).size.height * 0.089 / 1,
               child: Row(
@@ -436,6 +515,8 @@ class _AddCarScreenState extends State<AddCarScreen> {
                                               setState(() {
                                                 selectedModel = newValue;
                                                 selectedYear = null;
+                                                titleController.text = '$selectedCar $selectedModel';
+
                                               });
                                             },
                                             items: selectedCar != null
@@ -975,8 +1056,17 @@ class _AddCarScreenState extends State<AddCarScreen> {
             ]),
             /////////// added features from selection end
             SizedBox(height: MediaQuery.of(context).size.height * 0.015 / 1),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text('Name'.toUpperCase(),
+                  style: textTheme.labelSmall!.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade600)),
+            ),
             CustomTextFormField(
               hintText: 'Name',
+              readOnly: true,
               controller: titleController,
             ),
             const SizedBox(height:10),
@@ -1100,9 +1190,11 @@ class _AddCarScreenState extends State<AddCarScreen> {
                     UiUtils(context).showSnackBar( 'Choose Regional Spec');
                   } else if (selectedCity!.isEmpty) {
                     UiUtils(context).showSnackBar( 'Choose City');
-                  } else if (vinNumberController.text.isEmpty) {
-                    UiUtils(context).showSnackBar( 'Enter Vin Number');
-                  }else if (titleController.text.isEmpty) {
+                  }
+                  // else if (vinNumberController.text.isEmpty) {
+                  //   UiUtils(context).showSnackBar( 'Enter Vin Number');
+                  // }
+                  else if (titleController.text.isEmpty) {
                     UiUtils(context).showSnackBar( 'Enter Name');
                   } else if (contactNbrController.text.isEmpty){
                     UiUtils(context).showSnackBar( 'Enter Contact Number');
@@ -1110,6 +1202,9 @@ class _AddCarScreenState extends State<AddCarScreen> {
                     UiUtils(context).showSnackBar( 'Enter WhatsApp Number');
                   }else if (priceController.text.isEmpty) {
                     UiUtils(context).showSnackBar( 'Enter Price');
+                  }else if(priceController.text[0] == '0'){
+                    showtoastF(context, "Price can not start with 0");
+
                   } else if (gear == 'Select') {
                     UiUtils(context).showSnackBar( 'Choose Gear Features');
                   } else if (speed == 'Select') {
@@ -1169,7 +1264,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
                           type: typecontroller.text ?? '',
                           desc: descriptionController.text ?? '',
                           price: priceController.text ?? '',
-                          image: imagesList.isNotEmpty ? imagesList[0].path.toString() : '',
+                          image: imagesFiles.isNotEmpty ? imagesFiles[0].path.toString() : '',
                           gearF: gear,
                           speedF: speed,
                           cylF: colorIndex,
@@ -1529,6 +1624,14 @@ class _AddCarScreenState extends State<AddCarScreen> {
                 const SizedBox(height: 1, child: Divider()),
                 CupertinoListTile(
                   onTap: () {
+                    updateSeatsF('5');
+                    Navigator.pop(context);
+                  },
+                  title: const Text('5'),
+                ),
+                const SizedBox(height: 1, child: Divider()),
+                CupertinoListTile(
+                  onTap: () {
                     updateSeatsF('6');
                     Navigator.pop(context);
                   },
@@ -1537,10 +1640,26 @@ class _AddCarScreenState extends State<AddCarScreen> {
                 const SizedBox(height: 1, child: Divider()),
                 CupertinoListTile(
                   onTap: () {
+                    updateSeatsF('7');
+                    Navigator.pop(context);
+                  },
+                  title: const Text('7'),
+                ),
+                const SizedBox(height: 1, child: Divider()),
+                CupertinoListTile(
+                  onTap: () {
                     updateSeatsF('8');
                     Navigator.pop(context);
                   },
                   title: const Text('8'),
+                ),
+                const SizedBox(height: 1, child: Divider()),
+                CupertinoListTile(
+                  onTap: () {
+                    updateSeatsF('9');
+                    Navigator.pop(context);
+                  },
+                  title: const Text('9'),
                 ),
                 const SizedBox(height: 1, child: Divider()),
                 CupertinoListTile(
