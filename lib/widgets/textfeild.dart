@@ -6,6 +6,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChange,
     this.onTap,
     this.alignment,
+    this.readOnly,
     this.width,
     this.controller,
     this.focusNode,
@@ -31,6 +32,8 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String)? onChange;
   final VoidCallback? onTap;
   final bool? enabled;
+  final bool? readOnly;
+
   final Alignment? alignment;
   final double? width;
   final TextEditingController? controller;
@@ -71,6 +74,7 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: onChange,
           controller: controller,
           // focusNode: focusNode ?? FocusNode(),
+          readOnly: readOnly??false,
           autofocus: autofocus!,
           style: textStyle ?? const TextStyle(),
           obscureText: obscureText!,
@@ -90,6 +94,7 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
         isDense: true,
+
         contentPadding: contentPadding ?? const EdgeInsets.all(11),
         fillColor: fillColor ?? Colors.white70,
         filled: filled ?? true, // Use filled ?? true to handle null

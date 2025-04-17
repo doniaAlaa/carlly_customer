@@ -1159,8 +1159,8 @@ class _SearchCarScreenState extends State<SearchCarScreen> {
                                               width:MediaQuery.of(context).size.width*0.8,
                                               child: Text(
                                                 overflow: TextOverflow.ellipsis,
-                                                // e['listing_title'] ?? '',
-                                                '${e['id'].toString()}${e['images'].toString()}',
+                                                e['listing_title'] ?? '',
+                                                // '${e['id'].toString()}${e['images'].toString()}',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium!
