@@ -21,7 +21,9 @@ class Header extends StatelessWidget {
   final bool? enableBackButton;
   final Widget? navbar;
   final FloatingActionButton? floatingActionButton;
-   Header({
+  final Function()? backAction;
+
+  Header({
     super.key,
     this.title = '',
     this.profile = ImageAssets.profile,
@@ -32,6 +34,7 @@ class Header extends StatelessWidget {
     this.bodyheight = 0.6,
     this.isScrollable = true,
     this.navbar,
+    this.backAction,
     this.floatingActionButton, this.enableBackButton = true,
   });
 
@@ -60,8 +63,8 @@ class Header extends StatelessWidget {
                         );
                       },
                     ),
-                    enableBackButton == true ?IconButton(onPressed: () async {
-                      Navigator.pop(context);
+                    enableBackButton == true ?IconButton(onPressed: backAction?? (){
+                      backAction?? Navigator.pop(context);
                     }, icon: Icon(Icons.arrow_back,color: Colors.white,)):SizedBox()
                   ],
                 ),

@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    print('_HomePageState.initState ------ origin ${widget.origin}');
+    // print('_HomePageState.initState ------ origin ${widget.origin}');
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         AppLinksDeepLink.instance.getInitialRoute(appLinkUri);
