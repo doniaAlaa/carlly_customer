@@ -1178,7 +1178,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
 
                                                Share.shareXFiles(
                                                  [XFile(file.path)],
-                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
+                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nHello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop  on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?\n السلام عليكم، شفت ورشتكم${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آجيبها؟\nhttps://carllymotors.page.link/workshop',
 
                                                );
 
