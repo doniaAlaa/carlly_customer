@@ -10,6 +10,7 @@ import 'package:carsilla/widgets/header.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
@@ -98,6 +99,32 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
   //   },
   // ];
   RepairWorkshopViewScreenController repairWorkshopViewScreenController = Get.put(RepairWorkshopViewScreenController());
+  Future<void> openMap(double latitude, double longitude) async {
+    String mapUrl = '';
+    if (Platform.isIOS) {
+      mapUrl =
+      'https://maps.apple.com/?daddr=$latitude,$longitude';
+    } else {
+      mapUrl =
+      'https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude&travelmode=driving';
+    }
+
+    if (await canLaunchUrl(Uri.parse(mapUrl))) {
+      await launchUrl(Uri.parse(mapUrl),mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+  Future<void> openGoogleMapsOnCity(String cityName) async {
+    final Uri uri = Uri.parse("https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(cityName)}");
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch Google Maps for $cityName';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -874,9 +901,9 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                               color: MainTheme.primaryColor),
                                         ),
                                         Spacer(),
-                                        GestureDetector(
-                                          onTap: () {
-                                            // Handle location tap
+                                        InkWell(
+                                          onTap: (){
+                                            openGoogleMapsOnCity(repairWorkshopViewScreenController.workshopsModel[index].city??'Dubai');
                                           },
                                           child: SizedBox(
                                             width: 80,
@@ -924,28 +951,39 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                       ],
                                     ),
                                     const SizedBox(height: 4),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.location_on,
-                                          color: MainTheme.primaryColor,
-                                          size: 20,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      child: InkWell(
+                                        onTap: () async{
+                                          print(repairWorkshopViewScreenController.workshopsModel[index].lat);
+                                          print(repairWorkshopViewScreenController.workshopsModel[index].lng);
+                                          await openMap(repairWorkshopViewScreenController.workshopsModel[index].lat??0.0,
+                                          repairWorkshopViewScreenController.workshopsModel[index].lng??0.0);
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Icons.location_on,
+                                              color: MainTheme.primaryColor,
+                                              size: 20,
+                                            ),
+                                            const SizedBox(width: 4),
+                                            Expanded(
+                                              child: Text(
+                                                // workshop['address']!,
+                                                repairWorkshopViewScreenController.workshopsModel[index].location??'location',
+                                                style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black54),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        const SizedBox(width: 4),
-                                        Expanded(
-                                          child: Text(
-                                            // workshop['address']!,
-                                            repairWorkshopViewScreenController.workshopsModel[index].location??'location',
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black54),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                     // const SizedBox(height: 4),
                                     shopDays != null &&
@@ -1127,7 +1165,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                               await file.writeAsBytes(bytes);
                                                Share.shareXFiles(
                                                  [XFile(file.path)],
-                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
+                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nHello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop  on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?\n السلام عليكم، شفت ورشتكم${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آجيبها؟\nhttps://carllymotors.page.link/workshop',
 
                                                );
 
