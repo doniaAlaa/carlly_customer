@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:carsilla/controllers/repair_workshop_view_screen_controller.dart';
 import 'package:carsilla/core/reusable_widgets/images_gallary.dart';
 import 'package:carsilla/models/workshops_model.dart';
+import 'package:carsilla/screens/repair_workshop/workshop_details.dart';
 import 'package:flutter/material.dart';
 import 'package:carsilla/utils/theme.dart';
-import 'package:carsilla/widgets/btn.dart';
 import 'package:carsilla/widgets/header.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -40,64 +40,7 @@ class RepairWorkshopViewScreen extends StatefulWidget {
 class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
   bool isExpanded = true;
 
-  // final List<Map<String, String>> nearbyWorkshops = [
-  //   {
-  //     'name': 'Dubai Auto Workshop',
-  //     'location': 'Dubai',
-  //     'address': '123 Main St, Dubai',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Abu Dhabi Car Repair',
-  //     'location': 'Abu Dhabi',
-  //     'address': '456 Elm St, Abu Dhabi',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Sharjah Vehicle Service',
-  //     'location': 'Sharjah',
-  //     'address': '789 Oak St, Sharjah',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Ajman Auto Care',
-  //     'location': 'Ajman',
-  //     'address': '101 Pine St, Ajman',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Ras Al Khaimah Repair Center',
-  //     'location': 'Ras Al Khaimah',
-  //     'address': '202 Maple St, Ras Al Khaimah',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Fujairah Car Workshop',
-  //     'location': 'Fujairah',
-  //     'address': '303 Cedar St, Fujairah',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Umm Al Quwain Auto Service',
-  //     'location': 'Umm Al Quwain',
-  //     'address': '404 Birch St, Umm Al Quwain',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  //   {
-  //     'name': 'Al Ain Vehicle Repair',
-  //     'location': 'Al Ain',
-  //     'address': '505 Spruce St, Al Ain',
-  //     'image': 'https://blog.bayiq.com/hubfs/shutterstock_138252137.jpg',
-  //     'hours': 'Mon-Fri: 9am - 6pm',
-  //   },
-  // ];
+
   RepairWorkshopViewScreenController repairWorkshopViewScreenController = Get.put(RepairWorkshopViewScreenController());
   Future<void> openMap(double latitude, double longitude) async {
     String mapUrl = '';
@@ -292,519 +235,6 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
               ),
             ),
             SizedBox(height: size.height * 0.01),
-            ///////////////////////////////////////
-            // Wrap(
-            //   spacing: 8.0,
-            //   runSpacing: 8.0,
-            //   children: nearbyWorkshops.map((workshop) {
-            //     return Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: Container(
-            //         // height: size.width * 0.8,
-            //         width: size.width,
-            //         decoration: BoxDecoration(
-            //             color: Colors.black12,
-            //             borderRadius: BorderRadius.circular(12)),
-            //         child: GestureDetector(
-            //           onTap: () {
-            //             // Handle tap event
-            //           },
-            //           child: Column(
-            //             mainAxisAlignment: MainAxisAlignment.start,
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               ClipRRect(
-            //                 borderRadius: BorderRadius.circular(12),
-            //                 child: Image.network(
-            //                   workshop['image']!,
-            //                   width: MediaQuery.of(context).size.width * 0.9,
-            //                   height: size.width * 0.48,
-            //                   fit: BoxFit.cover,
-            //                   errorBuilder: (context, error, stackTrace) =>
-            //                       Image.asset('assets/images/carvector.png'),
-            //                 ),
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.symmetric(horizontal: 8),
-            //                 child: Column(
-            //                   children: [
-            //                     const SizedBox(height: 12),
-            //                     Row(
-            //                       children: [
-            //                         Text(
-            //                           workshop['name']!,
-            //                           style: Theme.of(context)
-            //                               .textTheme
-            //                               .labelLarge!
-            //                               .copyWith(
-            //                               fontSize: 18,
-            //                               color: MainTheme.primaryColor),
-            //                         ),
-            //                         Spacer(),
-            //                         GestureDetector(
-            //                           onTap: () {
-            //                             // Handle location tap
-            //                           },
-            //                           child: SizedBox(
-            //                             width: 80,
-            //                             child: Row(
-            //                               children: [
-            //                                 const Icon(
-            //                                   Icons.location_pin,
-            //                                   color: MainTheme.primaryColor,
-            //                                   size: 20,
-            //                                 ),
-            //                                 const SizedBox(width: 4),
-            //                                 Expanded(
-            //                                   child: Text(
-            //                                     workshop['location']!,
-            //                                     style: const TextStyle(
-            //                                         fontSize: 14,
-            //                                         color: Colors.black54),
-            //                                     overflow: TextOverflow.ellipsis,
-            //                                   ),
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     const SizedBox(height: 4),
-            //                     Row(
-            //                       mainAxisAlignment: MainAxisAlignment.start,
-            //                       children: [
-            //                         Icon(
-            //                           Icons.star,
-            //                           color: MainTheme.primaryColor,
-            //                           size: 20,
-            //                         ),
-            //                         const SizedBox(width: 4),
-            //                         Text(
-            //                           '4.5', // Dummy rating
-            //                           style: const TextStyle(
-            //                               fontSize: 14, color: Colors.black54),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     const SizedBox(height: 4),
-            //                     Row(
-            //                       children: [
-            //                         const Icon(
-            //                           Icons.location_on,
-            //                           color: MainTheme.primaryColor,
-            //                           size: 20,
-            //                         ),
-            //                         const SizedBox(width: 4),
-            //                         Expanded(
-            //                           child: Text(
-            //                             workshop['address']!,
-            //                             style: const TextStyle(
-            //                                 fontSize: 14,
-            //                                 color: Colors.black54),
-            //                             overflow: TextOverflow.ellipsis,
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     const SizedBox(height: 4),
-            //                     Row(
-            //                       children: [
-            //                         const Icon(
-            //                           Icons.access_time,
-            //                           color: MainTheme.primaryColor,
-            //                           size: 20,
-            //                         ),
-            //                         const SizedBox(width: 4),
-            //                         Text(
-            //                           workshop['hours']!,
-            //                           style: const TextStyle(
-            //                               fontSize: 14, color: Colors.black54),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     Padding(
-            //                       padding: const EdgeInsets.all(8.0),
-            //                       child: Row(
-            //                         mainAxisAlignment:
-            //                         MainAxisAlignment.spaceBetween,
-            //                         children: [
-            //                           GestureDetector(
-            //                             onTap: () {
-            //                               // Handle WhatsApp tap
-            //                             },
-            //                             child: Container(
-            //                               height: 30,
-            //                               padding: EdgeInsets.symmetric(
-            //                                   horizontal: 12),
-            //                               decoration: BoxDecoration(
-            //                                   border: Border.all(
-            //                                       color:
-            //                                       MainTheme.primaryColor),
-            //                                   borderRadius:
-            //                                   BorderRadius.circular(16)),
-            //                               child: Row(
-            //                                 mainAxisAlignment:
-            //                                 MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Image.asset(
-            //                                     'assets/images/whatsapp1.png',
-            //                                     color: Colors.green.shade800,
-            //                                     height: 17,
-            //                                     width: 17,
-            //                                   ),
-            //                                   const SizedBox(width: 4),
-            //                                   const Text(
-            //                                     'WhatsApp',
-            //                                     style: TextStyle(
-            //                                         fontSize: 12,
-            //                                         fontWeight:
-            //                                         FontWeight.w500),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                           GestureDetector(
-            //                             onTap: () {
-            //                               // Handle Call tap
-            //                             },
-            //                             child: Container(
-            //                               height: 30,
-            //                               padding: EdgeInsets.symmetric(
-            //                                   horizontal: 12),
-            //                               decoration: BoxDecoration(
-            //                                   border: Border.all(
-            //                                       color:
-            //                                       MainTheme.primaryColor),
-            //                                   borderRadius:
-            //                                   BorderRadius.circular(16)),
-            //                               child: const Row(
-            //                                 mainAxisAlignment:
-            //                                 MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Icon(
-            //                                     Icons.phone,
-            //                                     color: MainTheme.primaryColor,
-            //                                     size: 20,
-            //                                   ),
-            //                                   SizedBox(width: 4),
-            //                                   Text(
-            //                                     'Call',
-            //                                     style: TextStyle(
-            //                                         fontSize: 12,
-            //                                         fontWeight:
-            //                                         FontWeight.w500),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                           GestureDetector(
-            //                             onTap: () {
-            //                               // Handle Share tap
-            //                             },
-            //                             child: Container(
-            //                               height: 30,
-            //                               padding: EdgeInsets.symmetric(
-            //                                   horizontal: 12),
-            //                               decoration: BoxDecoration(
-            //                                   border: Border.all(
-            //                                       color:
-            //                                       MainTheme.primaryColor),
-            //                                   borderRadius:
-            //                                   BorderRadius.circular(16)),
-            //                               child: const Row(
-            //                                 mainAxisAlignment:
-            //                                 MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Icon(
-            //                                     Icons.share,
-            //                                     color: MainTheme.primaryColor,
-            //                                     size: 18,
-            //                                   ),
-            //                                   SizedBox(width: 4),
-            //                                   Text(
-            //                                     'Share',
-            //                                     style: TextStyle(
-            //                                         fontSize: 12,
-            //                                         fontWeight:
-            //                                         FontWeight.w500),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                         ],
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   }).toList(),
-            // ),
-
-            ///////////////////////////////////////
-            // Wrap(
-            //   spacing: 8.0,
-            //   runSpacing: 8.0,
-            //   children: nearbyWorkshops.map((workshop) {
-            //     return Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: Container(
-            //         // height: size.width * 0.8,
-            //         width: size.width,
-            //         decoration: BoxDecoration(
-            //             color: Colors.black12,
-            //             borderRadius: BorderRadius.circular(12)),
-            //         child: GestureDetector(
-            //           onTap: () {
-            //             // Handle tap event
-            //           },
-            //           child: Column(
-            //             mainAxisAlignment: MainAxisAlignment.start,
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               ClipRRect(
-            //                 borderRadius: BorderRadius.circular(12),
-            //                 child: Image.network(
-            //                   workshop['image']!,
-            //                   width: MediaQuery.of(context).size.width * 0.9,
-            //                   height: size.width * 0.48,
-            //                   fit: BoxFit.cover,
-            //                   errorBuilder: (context, error, stackTrace) =>
-            //                       Image.asset('assets/images/carvector.png'),
-            //                 ),
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.symmetric(horizontal: 8),
-            //                 child: Column(
-            //                   children: [
-            //                     const SizedBox(height: 12),
-            //                     Row(
-            //                       children: [
-            //                         Text(
-            //                           workshop['name']!,
-            //                           style: Theme.of(context)
-            //                               .textTheme
-            //                               .labelLarge!
-            //                               .copyWith(
-            //                                   fontSize: 18,
-            //                                   color: MainTheme.primaryColor),
-            //                         ),
-            //                         Spacer(),
-            //                         GestureDetector(
-            //                           onTap: () {
-            //                             // Handle location tap
-            //                           },
-            //                           child: SizedBox(
-            //                             width: 80,
-            //                             child: Row(
-            //                               children: [
-            //                                 const Icon(
-            //                                   Icons.location_pin,
-            //                                   color: MainTheme.primaryColor,
-            //                                   size: 20,
-            //                                 ),
-            //                                 const SizedBox(width: 4),
-            //                                 Expanded(
-            //                                   child: Text(
-            //                                     workshop['location']!,
-            //                                     style: const TextStyle(
-            //                                         fontSize: 14,
-            //                                         color: Colors.black54),
-            //                                     overflow: TextOverflow.ellipsis,
-            //                                   ),
-            //                                 ),
-            //                               ],
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     const SizedBox(height: 4),
-            //                     Row(
-            //                       mainAxisAlignment: MainAxisAlignment.start,
-            //                       children: [
-            //                         Icon(
-            //                           Icons.star,
-            //                           color: MainTheme.primaryColor,
-            //                           size: 20,
-            //                         ),
-            //                         const SizedBox(width: 4),
-            //                         Text(
-            //                           '4.5', // Dummy rating
-            //                           style: const TextStyle(
-            //                               fontSize: 14, color: Colors.black54),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     const SizedBox(height: 4),
-            //                     Row(
-            //                       children: [
-            //                         const Icon(
-            //                           Icons.location_on,
-            //                           color: MainTheme.primaryColor,
-            //                           size: 20,
-            //                         ),
-            //                         const SizedBox(width: 4),
-            //                         Expanded(
-            //                           child: Text(
-            //                             workshop['address']!,
-            //                             style: const TextStyle(
-            //                                 fontSize: 14,
-            //                                 color: Colors.black54),
-            //                             overflow: TextOverflow.ellipsis,
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     const SizedBox(height: 4),
-            //                     Row(
-            //                       children: [
-            //                         const Icon(
-            //                           Icons.access_time,
-            //                           color: MainTheme.primaryColor,
-            //                           size: 20,
-            //                         ),
-            //                         const SizedBox(width: 4),
-            //                         Text(
-            //                           workshop['hours']!,
-            //                           style: const TextStyle(
-            //                               fontSize: 14, color: Colors.black54),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     Padding(
-            //                       padding: const EdgeInsets.all(8.0),
-            //                       child: Row(
-            //                         mainAxisAlignment:
-            //                             MainAxisAlignment.spaceBetween,
-            //                         children: [
-            //                           GestureDetector(
-            //                             onTap: () {
-            //                               // Handle WhatsApp tap
-            //                             },
-            //                             child: Container(
-            //                               height: 30,
-            //                               padding: EdgeInsets.symmetric(
-            //                                   horizontal: 12),
-            //                               decoration: BoxDecoration(
-            //                                   border: Border.all(
-            //                                       color:
-            //                                           MainTheme.primaryColor),
-            //                                   borderRadius:
-            //                                       BorderRadius.circular(16)),
-            //                               child: Row(
-            //                                 mainAxisAlignment:
-            //                                     MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Image.asset(
-            //                                     'assets/images/whatsapp1.png',
-            //                                     color: Colors.green.shade800,
-            //                                     height: 17,
-            //                                     width: 17,
-            //                                   ),
-            //                                   const SizedBox(width: 4),
-            //                                   const Text(
-            //                                     'WhatsApp',
-            //                                     style: TextStyle(
-            //                                         fontSize: 12,
-            //                                         fontWeight:
-            //                                             FontWeight.w500),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                           GestureDetector(
-            //                             onTap: () {
-            //                               // Handle Call tap
-            //                             },
-            //                             child: Container(
-            //                               height: 30,
-            //                               padding: EdgeInsets.symmetric(
-            //                                   horizontal: 12),
-            //                               decoration: BoxDecoration(
-            //                                   border: Border.all(
-            //                                       color:
-            //                                           MainTheme.primaryColor),
-            //                                   borderRadius:
-            //                                       BorderRadius.circular(16)),
-            //                               child: const Row(
-            //                                 mainAxisAlignment:
-            //                                     MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Icon(
-            //                                     Icons.phone,
-            //                                     color: MainTheme.primaryColor,
-            //                                     size: 20,
-            //                                   ),
-            //                                   SizedBox(width: 4),
-            //                                   Text(
-            //                                     'Call',
-            //                                     style: TextStyle(
-            //                                         fontSize: 12,
-            //                                         fontWeight:
-            //                                             FontWeight.w500),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                           GestureDetector(
-            //                             onTap: () {
-            //                               // Handle Share tap
-            //                             },
-            //                             child: Container(
-            //                               height: 30,
-            //                               padding: EdgeInsets.symmetric(
-            //                                   horizontal: 12),
-            //                               decoration: BoxDecoration(
-            //                                   border: Border.all(
-            //                                       color:
-            //                                           MainTheme.primaryColor),
-            //                                   borderRadius:
-            //                                       BorderRadius.circular(16)),
-            //                               child: const Row(
-            //                                 mainAxisAlignment:
-            //                                     MainAxisAlignment.center,
-            //                                 children: [
-            //                                   Icon(
-            //                                     Icons.share,
-            //                                     color: MainTheme.primaryColor,
-            //                                     size: 18,
-            //                                   ),
-            //                                   SizedBox(width: 4),
-            //                                   Text(
-            //                                     'Share',
-            //                                     style: TextStyle(
-            //                                         fontSize: 12,
-            //                                         fontWeight:
-            //                                             FontWeight.w500),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ),
-            //                         ],
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   }).toList(),
-            // ),
             Obx((){
               return repairWorkshopViewScreenController.loadingWorkshops.value?
                   CircularProgressIndicator():
@@ -816,18 +246,21 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                   itemBuilder: (context,index){
                     List<SelectedDays>? shopDays = repairWorkshopViewScreenController.workshopsModel[index].days;
                     WorkshopsModel workshopsModel = repairWorkshopViewScreenController.workshopsModel[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        // height: size.width * 0.8,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(12)),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Handle tap event
-                          },
+                    return InkWell(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  WorkshopDetails(selectedServiceDepartment: widget.selectedServiceDepartment,workshopsModel: repairWorkshopViewScreenController.workshopsModel[index],)),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          // height: size.width * 0.8,
+                          width: size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(12)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -901,29 +334,36 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                               color: MainTheme.primaryColor),
                                         ),
                                         Spacer(),
-                                        SizedBox(
-                                          width: 80,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              const Icon(
-                                                Icons.location_pin,
-                                                color: MainTheme.primaryColor,
-                                                size: 20,
-                                              ),
-                                              const SizedBox(width: 4),
-                                              Expanded(
-                                                child: Text(
-                                                  repairWorkshopViewScreenController.workshopsModel[index].city??'city',
+                                        InkWell(
+                                          onTap: () async{
 
-                                                  style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black54),
-                                                  overflow: TextOverflow.ellipsis,
+                                            await openMap(repairWorkshopViewScreenController.workshopsModel[index].lat??0.0,
+                                            repairWorkshopViewScreenController.workshopsModel[index].lng??0.0);
+                                          },
+                                          child: SizedBox(
+                                            width: 80,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                const Icon(
+                                                  Icons.location_pin,
+                                                  color: MainTheme.primaryColor,
+                                                  size: 20,
                                                 ),
-                                              ),
-                                            ],
+                                                const SizedBox(width: 4),
+                                                Expanded(
+                                                  child: Text(
+                                                    repairWorkshopViewScreenController.workshopsModel[index].city??'city',
+
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black54),
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -950,8 +390,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                                       child: InkWell(
                                         onTap: () async{
-                                          print(repairWorkshopViewScreenController.workshopsModel[index].lat);
-                                          print(repairWorkshopViewScreenController.workshopsModel[index].lng);
+
                                           await openMap(repairWorkshopViewScreenController.workshopsModel[index].lat??0.0,
                                           repairWorkshopViewScreenController.workshopsModel[index].lng??0.0);
                                         },
@@ -982,10 +421,10 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                     ),
                                     // const SizedBox(height: 4),
                                     shopDays != null &&
-                                        shopDays!.isNotEmpty?
+                                        shopDays.isNotEmpty?
                                     InkWell(
                                       onTap: (){
-                                        if(shopDays!.length > 1) {
+                                        if(shopDays.length > 1) {
                                           repairWorkshopViewScreenController.selectedIndex.value = index ;
                                           repairWorkshopViewScreenController.openDays.value = !repairWorkshopViewScreenController.openDays.value ;
                                         }
@@ -1065,9 +504,9 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                                   "https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp_number} في شركة Carlly Motors ، وعندي شغل ?text=${Uri.encodeComponent(
                                                     '''
                                                    السلام عليكم، شفت ورشتكم ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آييبها؟
-                        \n Hello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?
+                                                    \n Hello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?
                                                   \n https://carllymotors.page.link/workshop
-
+                                                
                                                     '''
 
                                                   )}"

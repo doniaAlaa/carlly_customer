@@ -24,7 +24,8 @@ class WorkshopsModel {
   final double? lng;
   final List<SelectedDays>? days;
   final List<dynamic>? images;
-
+  final List<BrandModel>? categories;
+  final List<BrandModel>? brands;
 
   WorkshopsModel({
 
@@ -48,7 +49,9 @@ class WorkshopsModel {
     // this.categories,
     // this.brands,
     this.days,
-    this.images
+    this.images,
+    this.categories,
+    this.brands,
 
 
   });
@@ -76,8 +79,10 @@ class WorkshopsModel {
 
       days: List<SelectedDays>.from(
           json['days'].map((x) => SelectedDays.fromJson(x))),
-      // categories:
-      // brands:
+      categories: List<BrandModel>.from(
+          json['categories'].map((x) => BrandModel.fromJson(x))),
+      brands: List<BrandModel>.from(
+          json['brands'].map((x) => BrandModel.fromJson(x))),
 
 
     );
@@ -191,6 +196,68 @@ class BrandCategoriesModel {
   }
 
 
+
+
+
+
+
+}
+
+
+class BrandModel {
+  final int? id;
+  final String? name;
+  final String? image;
+  bool? selected ;
+
+
+
+  BrandModel({
+    this.id,
+    this.name,
+    this.image,
+    this.selected = false,
+
+
+  });
+
+  factory BrandModel.fromJson(Map<String, dynamic> json) {
+    return BrandModel(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      selected: json['selected'],
+
+
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+      'selected': selected,
+
+    };
+  }
+
+  BrandModel copyWith({
+    int? id,
+    String? name,
+    String? image,
+    bool? selected,
+
+
+  } ){
+    return BrandModel(
+      id:id??this.id,
+      name: name??this.name,
+      image:image??this.image,
+      selected:selected??this.selected,
+
+    );
+  }
 
 
 
