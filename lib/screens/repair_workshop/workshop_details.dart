@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:carsilla/core/reusable_widgets/images_gallary.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:carsilla/const/common_methods.dart';
@@ -99,28 +100,50 @@ class _WorkshopDetailsState extends State<WorkshopDetails> {
                         (widget.workshopsModel.images != null &&
                             widget.workshopsModel.images!.isNotEmpty)
 
-                            ? Image.network(
-                          // widget.workshopDataModel?.images?.first??'',
-                          widget.workshopsModel?.images?.first['image']??'',
-                          height: 120,
-                          fit: BoxFit.cover,
-                          errorBuilder: ( context,  exception,  stackTrace) {
-                            return Container(
-                                height: 140,
-                                color: MainTheme.primaryColor.withOpacity(0.1),
-                                child: Image.asset('assets/images/no_image.png'));
-                          },
-                          loadingBuilder:
-                              (context, child, progress) {
-                            if (progress == null) return child;
-                            return const Center(
-                                child: SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child:
-                                    CircularProgressIndicator()));
-                          },
-                        ):Container(
+                            ? Stack(
+                              children: [
+                                Image.network(
+                                // widget.workshopDataModel?.images?.first??'',
+                                widget.workshopsModel?.images?.first['image']??'',
+                                // height: 120
+                               width: MediaQuery.of(context).size.width,
+                                fit: BoxFit.cover,
+                                errorBuilder: ( context,  exception,  stackTrace) {
+                                return Container(
+                                    height: 140,
+                                    color: MainTheme.primaryColor.withOpacity(0.1),
+                                    child: Image.asset('assets/images/no_image.png'));
+                                                          },
+                                                          loadingBuilder:
+                                  (context, child, progress) {
+                                if (progress == null) return child;
+                                return const Center(
+                                    child: SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child:
+                                        CircularProgressIndicator()));
+                                                          },
+                                                        ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 40,width: 40,
+                                    decoration: BoxDecoration(
+                                        color: MainTheme.primaryColor,
+                                        borderRadius: BorderRadius.circular(12)
+
+                                    ),
+                                    child: InkWell(
+                                        onTap: (){
+                                          ImagesGallery().zoomIn(context,widget.workshopsModel.images!);
+                                        },
+                                        child: Icon(Icons.zoom_in,color: Colors.white,)),
+                                  ),
+                                )
+
+                              ],
+                            ):Container(
                             height: 140,
                             color: MainTheme.primaryColor.withOpacity(0.1),
                             child: Image.asset('assets/images/no_image.png')),
