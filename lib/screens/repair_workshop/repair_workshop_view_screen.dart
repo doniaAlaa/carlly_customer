@@ -901,34 +901,29 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                               color: MainTheme.primaryColor),
                                         ),
                                         Spacer(),
-                                        InkWell(
-                                          onTap: (){
-                                            openGoogleMapsOnCity(repairWorkshopViewScreenController.workshopsModel[index].city??'Dubai');
-                                          },
-                                          child: SizedBox(
-                                            width: 80,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                const Icon(
-                                                  Icons.location_pin,
-                                                  color: MainTheme.primaryColor,
-                                                  size: 20,
-                                                ),
-                                                const SizedBox(width: 4),
-                                                Expanded(
-                                                  child: Text(
-                                                    repairWorkshopViewScreenController.workshopsModel[index].city??'city',
+                                        SizedBox(
+                                          width: 80,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              const Icon(
+                                                Icons.location_pin,
+                                                color: MainTheme.primaryColor,
+                                                size: 20,
+                                              ),
+                                              const SizedBox(width: 4),
+                                              Expanded(
+                                                child: Text(
+                                                  repairWorkshopViewScreenController.workshopsModel[index].city??'city',
 
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.black54),
-                                                    overflow: TextOverflow.ellipsis,
-                                                  ),
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black54),
+                                                  overflow: TextOverflow.ellipsis,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -952,7 +947,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                     ),
                                     const SizedBox(height: 4),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                                       child: InkWell(
                                         onTap: () async{
                                           print(repairWorkshopViewScreenController.workshopsModel[index].lat);
@@ -977,7 +972,7 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                                 repairWorkshopViewScreenController.workshopsModel[index].location??'location',
                                                 style: const TextStyle(
                                                     fontSize: 14,
-                                                    color: Colors.black54),
+                                                    color: Colors.blue),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
@@ -1066,7 +1061,18 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                             onTap: () {
                                               // Handle WhatsApp tap
                                               // launchUrlString('${repairWorkshopViewScreenController.workshopsModel[index].phone}');
-                                              launchUrlString('https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp_number}');
+                                              final whatsappUrl = Uri.parse(
+                                                  "https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp_number} في شركة Carlly Motors ، وعندي شغل ?text=${Uri.encodeComponent(
+                                                    '''
+                                                   السلام عليكم، شفت ورشتكم ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آييبها؟
+                        \n Hello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?
+                                                  \n https://carllymotors.page.link/workshop
+
+                                                    '''
+
+                                                  )}"
+                                              );
+                                              launchUrlString(whatsappUrl.toString());
 
                                             },
                                             child: Container(
@@ -1142,18 +1148,6 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                             onTap: () async{
                                               // Handle Share tap
                                               // final box = context.findRenderObject() as RenderBox?;
-                                              print('uuuuuuuuuuuuuu');
-                                              // repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image'];
-//                                               final uri = Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].logo??'');
-//                                               final response = await http.get(uri);
-//                                               final bytes =  response.bodyBytes;
-//                                               final temp =  await getTemporaryDirectory();
-//                                               final file = File('${temp.path}/shared_workshop_image.jpg');
-//
-//                                               await file.writeAsBytes(bytes);
-//                                               print(file.path);
-// \                                              final result = await http.head(Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].logo??''));
-//                                               print(result.statusCode);
 
                                              if(repairWorkshopViewScreenController.workshopsModel[index].images!.isNotEmpty){
                                                final uri = Uri.parse(repairWorkshopViewScreenController.workshopsModel[index].images?[0]['image']??'');
@@ -1165,7 +1159,8 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                               await file.writeAsBytes(bytes);
                                                Share.shareXFiles(
                                                  [XFile(file.path)],
-                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nHello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop  on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?\n السلام عليكم، شفت ورشتكم${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آجيبها؟\nhttps://carllymotors.page.link/workshop',
+                                                 // text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nHello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop  on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?\n السلام عليكم، شفت ورشتكم${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آجيبها؟\nhttps://carllymotors.page.link/workshop',
+                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
 
                                                );
 
@@ -1178,7 +1173,9 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
 
                                                Share.shareXFiles(
                                                  [XFile(file.path)],
-                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nHello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop  on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?\n السلام عليكم، شفت ورشتكم${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آجيبها؟\nhttps://carllymotors.page.link/workshop',
+                                                 text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nhttps://carllymotors.page.link/workshop',
+
+                                                 // text: 'workshop name : ${workshopsModel.workshop_name}\nphone : ${workshopsModel.phone}\nHello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop  on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?\n السلام عليكم، شفت ورشتكم${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آجيبها؟\nhttps://carllymotors.page.link/workshop',
 
 
                                                );
