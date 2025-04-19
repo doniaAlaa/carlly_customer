@@ -499,10 +499,9 @@ class _RepairWorkshopViewScreenState extends State<RepairWorkshopViewScreen> {
                                           GestureDetector(
                                             onTap: () {
                                               // Handle WhatsApp tap
-                                              // launchUrlString('${repairWorkshopViewScreenController.workshopsModel[index].phone}');
                                               final whatsappUrl = Uri.parse(
-                                                  "https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp_number} في شركة Carlly Motors ، وعندي شغل ?text=${Uri.encodeComponent(
-                                                    '''
+                                                  "https://wa.me/${repairWorkshopViewScreenController.workshopsModel[index].whatsapp_number}  ?text=${Uri.encodeComponent(
+                                                      '''
                                                    السلام عليكم، شفت ورشتكم ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آييبها؟
                                                     \n Hello, I saw your ${repairWorkshopViewScreenController.workshopsModel[index].workshop_name} workshop on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?
                                                   \n https://carllymotors.page.link/workshop

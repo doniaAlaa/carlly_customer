@@ -223,6 +223,17 @@ class _WorkshopDetailsState extends State<WorkshopDetails> {
                             fontWeight: FontWeight.w500,
                             color: Colors.black)),
                     SizedBox(height: 20,),
+                    Text('Location',
+                        style: textTheme.labelSmall!.copyWith(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade600)),
+                    Text(widget.workshopsModel?.location??'',
+                        style: textTheme.labelSmall!.copyWith(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black)),
+                    SizedBox(height: 20,),
                     Text('Employee Number',
                         style: textTheme.labelSmall!.copyWith(
                             fontSize: 11,
@@ -340,7 +351,7 @@ class _WorkshopDetailsState extends State<WorkshopDetails> {
                               onclick: () async {
                                 // var data = widget.carListingDetails;
                                 final whatsappUrl = Uri.parse(
-                                    "https://wa.me/${widget.workshopsModel.whatsapp_number} في شركة Carlly Motors ، وعندي شغل ?text=${Uri.encodeComponent(
+                                    "https://wa.me/${widget.workshopsModel.whatsapp_number}  ?text=${Uri.encodeComponent(
                                         '''
                                                    السلام عليكم، شفت ورشتكم ${widget.workshopsModel.workshop_name} في شركة Carlly Motors ، وعندي شغل ${widget.selectedServiceDepartment} بسيارتي. متى أقدر آييبها؟
                                                     \n Hello, I saw your ${widget.workshopsModel.workshop_name} workshop on the Carlly app. I need some ${widget.selectedServiceDepartment} work done on my car. When can I bring it in?
